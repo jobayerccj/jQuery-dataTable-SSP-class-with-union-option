@@ -1,24 +1,24 @@
-<table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+<table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" >
     <thead>
         <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Email</th>
+            <th>Customer Number</th>
+            <th>Name</th>
             <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Country</th>
             
         </tr>
     </thead>
  
     <tfoot>
         <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Email</th>
+           <th>Customer Number</th>
+            <th>Name</th>
             <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Country</th>
             
         </tr>
     </tfoot>
