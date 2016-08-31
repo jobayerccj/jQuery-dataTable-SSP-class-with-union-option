@@ -55,20 +55,14 @@
     //$joinQuery = "FROM {$table} AS u LEFT JOIN country AS m on u.country_id = m.country_id LEFT JOIN region AS r ON u.region_id = r.region_id AND u.country_id = r.country_id"; 
 
 
-    if($_POST['page'] == "artwork_list_full"){
+    if($_POST['page'] == "order_details"){
 
-        $joinQuery = "FROM artwork JOIN artwork_lang on (artwork_lang.artwork_id = artwork.artwork_id AND artwork_lang.lang_code ='".getLanguage()."') LEFT JOIN user u on u.user_id = artwork.artwork_ownerID LEFT JOIN user u2 on u2.user_id = artwork.artwork_licenseeID";
+        $joinQuery = "FROM orderdetails LEFT JOIN products on (products.productCode = orderdetails.productCode)";
+        //$joinQuery ="";
 
-        if (getUserdata("is_admin")) {
-            $user_id = 0;
-            $extraWhere = "";
-            $extraWhere2 = "";
-        }
-        else{
-            $extraWhere = "(artwork_ownerID = $user_id || artwork_licenseeID = $user_id)"; 
-            $extraWhere2 = "";
-        }
-
+        $extraWhere = "";
+        $extraWhere2 = "";
+        
         $group_by = "";
         
     }
@@ -94,10 +88,7 @@
     
     
     
-    $joinQuery = "";
-    $extraWhere = "";
-    $extraWhere2 = "";
-    $group_by = "";
+   
     require('ssp.php' );
     
     echo json_encode(SSP::simple( $_POST, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere, $group_by , $_POST['page']));

@@ -1,12 +1,12 @@
 <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" >
     <thead>
         <tr>
-            <th>Customer Number</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Country</th>
+            <th>Order Number</th>
+            <th>Product Name</th>
+            <th>Ordered quantity</th>
+            <th>price Each</th>
+            <th>Order LineNumber"</th>
+            
             
         </tr>
     </thead>
@@ -18,8 +18,6 @@
             <th>Phone</th>
             <th>Address</th>
             <th>City</th>
-            <th>Country</th>
-            
         </tr>
     </tfoot>
 </table>
@@ -41,12 +39,12 @@
 <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
 
 <script>
-var columns_short = [{"db": "customerNumber", "dt": 0, "field": "customerNumber"},
-                        {"db": "customerName", "dt": 1, "field": "customerName"},
-                        {"db": "phone", "dt": 2, "field": "phone"},
-                        {"db": "addressLine1", "dt": 3, "field": "addressLine1"},
-                        {"db": "city", "dt": 4, "field": "city"},
-                        {"db": "country", "dt": 5, "field": "country"}
+var columns_short = [   //{"db": "id", "dt": 0, "field": "id"},
+                        {"db": "orderNumber", "dt": 0, "field": "orderNumber"},
+                        {"db": "products.productName as productName", "dt": 1, "field": "productName"},
+                        {"db": "quantityOrdered", "dt": 2, "field": "quantityOrdered"},
+                        {"db": "priceEach", "dt": 3, "field": "priceEach"},
+                        {"db": "orderLineNumber", "dt": 4, "field": "orderLineNumber"}  
                     ];
 
 $(document).ready(function() {
@@ -56,7 +54,7 @@ $(document).ready(function() {
         "ajax": {
             "type": "POST",
             "url": "dataTable.php",
-            "data": {"table": "customers", "primary_key": 'customerNumber', "page": "artwork_list_short1", "columns": columns_short}
+            "data": {"table": "orderdetails", "primary_key": "id", "page": "order_details", "columns": columns_short}
         }
     });
 });
