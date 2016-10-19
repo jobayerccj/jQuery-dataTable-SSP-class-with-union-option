@@ -46,6 +46,28 @@ $(document).ready(function() {
     $('#example').dataTable( {
         "processing": true,
         "serverSide": true,
+        // If you need to change any columns appearance or need to add any custom html, you can do it using columnDefs
+        "columnDefs": [
+            
+            {
+                "targets": 3,
+                "render": function (data, type, full, meta) {
+                    if (full[3] > 100 ) {
+                        return "<b>" + full[3] + "</b>";
+                    }
+                    else {
+                        return full[3];
+                    }
+                }
+            },
+            
+            // If you need to hide any column data, use below code
+            /*{
+                "targets": 5,
+                "visible": false
+            }*/
+
+        ],
         "ajax": {
             "type": "POST",
             "url": "dataTable.php",
