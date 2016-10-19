@@ -226,6 +226,9 @@ class Ssp {
      *  @param  array $columns Column information array
      *  @param  array $joinQuery Join query String
      *  @param  string $extraWhere Where query String
+     *  @param  string $groupby Group By query String
+     *  @param  string $page Page name used for customize return data for specific pages
+     *  @param  string $unionWhere Union Where query String
      *
      *  @return array  Server-side processing response array
      *
@@ -314,146 +317,26 @@ class Ssp {
         $all_data = array(
             "draw"            => intval( $request['draw'] ),
             "recordsTotal"    => intval( $recordsTotal ),
-            //"recordsTotal"    => $query,
+            //"recordsTotal"    => $query, /* sometimes we need to check executed query, you can do it using this line */
             "recordsFiltered" => intval( $recordsFiltered ),
             "data"            => SSP::data_output( $columns, $data, $joinQuery )
         );
 
-        if($page == "artwork_list_full"){
+        // When we need to change out raw data to anything else using any php method, we can do it by manipulating existing returned data array like this one
+
+        if($page == "order_details"){
         	 for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
 	            $all_data["data"][$i]['artwork_id'] = $all_data["data"][$i][0];
-	            $all_data["data"][$i]['group_id'] = $all_data["data"][$i][9];
-	            $all_data["data"][$i]['code_status'] = $all_data["data"][$i][10];
-	            $all_data["data"][$i]['product_type'] = $all_data["data"][$i][11];
-	            $all_data["data"][$i]['portfolio_id'] = $all_data["data"][$i][12];
-	            $all_data["data"][$i]['code'] = $all_data["data"][$i][13];
-	            $all_data["data"][$i]['artwork_licenseeID'] = $all_data["data"][$i][7];
 
-                $all_data["data"][$i][15] = artwork_common_action_items2($all_data["data"][$i]);
-                $all_data["data"][$i][16] = getCodeBox($all_data["data"][$i]['code'], $all_data["data"][$i]['code_status'], $all_data["data"][$i]['product_type']);
-                $all_data["data"][$i][17] = chkPrivacyProtection($all_data["data"][$i][0], 2);
-
-                if($all_data["data"][$i][2] == ""){
-                    $all_data["data"][$i][18] = get_owner_invitation_status($all_data["data"][$i][0]);
-                }
-                else{
-                    $all_data["data"][$i][18] = "";
-                }
+                $all_data["data"][$i][5] = get_custom_data1();
                 
-                $all_data["data"][$i][19] = getUserdata("type");
-            }
-        }
-
-        elseif($page == "artwork_list_short"){
-             for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i]['artwork_id'] = $all_data["data"][$i][0];
-                $all_data["data"][$i]['group_id'] = $all_data["data"][$i][9];
-                $all_data["data"][$i]['code_status'] = $all_data["data"][$i][10];
-                $all_data["data"][$i]['product_type'] = $all_data["data"][$i][11];
-                $all_data["data"][$i]['portfolio_id'] = $all_data["data"][$i][12];
-                $all_data["data"][$i]['code'] = $all_data["data"][$i][13];
-                $all_data["data"][$i]['artwork_licenseeID'] = $all_data["data"][$i][7];
-
-                $all_data["data"][$i][15] = artwork_common_action_items2($all_data["data"][$i]);
-                $all_data["data"][$i][16] = getCodeBox($all_data["data"][$i]['code'], $all_data["data"][$i]['code_status'], $all_data["data"][$i]['product_type']);
-                $all_data["data"][$i][17] = getGroupCodeBox($all_data["data"][$i]['group_id']);
-                $all_data["data"][$i][18] = getPortfolioCodeBox($all_data["data"][$i]['portfolio_id']);
-                $all_data["data"][$i][19] = getArtworkMultiples($all_data["data"][$i][0], false, true);
-                $all_data["data"][$i][20] = chkPrivacyProtection($all_data["data"][$i][0], 2);
-
-                if($all_data["data"][$i][2] == ""){
-                    $all_data["data"][$i][21] = get_owner_invitation_status($all_data["data"][$i][0]);
+                if($all_data["data"][$i][4] == 1){
+                    $all_data["data"][$i][4] = get_custom_data2(); //custom php method
                 }
-                else{
-                    $all_data["data"][$i][21] = "";
-                }
-
-                
-            }
-
-        }
-        elseif($page == "artwork_code_list"){
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i][5] = getCodeStatusColor($all_data["data"][$i][0]);
-
-            }
-            
-        }
-
-        elseif($page == "dsac_code_list"){
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i][5] = getDsacCodeStatusColor($all_data["data"][$i][0]);
-
-            }
-            
-        }
-
-        elseif($page == "portfolio_list_short" || $page == "portfolio_list_full" ){
-            
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i][11] = $all_data["data"][$i][0];
-                $all_data["data"][$i][0] = getPortfolioCodeBox($all_data["data"][$i][8], $all_data["data"][$i][0]);
-                //$all_data["data"][$i][10] = $all_data["data"][$i][2];
-                //$all_data["data"][$i][2] = getUser($all_data["data"][$i][2], "user_displayName");
-                $all_data["data"][$i][12] = $all_data["data"][$i][9];
-                $all_data["data"][$i][13] = getPGCodeBox($all_data["data"][$i][9]);
-                $all_data["data"][$i][5] = getPortfolioMultipleCount($all_data["data"][$i][9]);
-                $all_data["data"][$i][6] = date_formation("Y-m-d H:i:s",$all_data["data"][$i][6],  db_timezone(),  client_timezone(),"j M, Y h:i A");
-                $all_data["data"][$i][3] = find_artworks_by_portfolio_id($all_data["data"][$i][8]);
-                $all_data["data"][$i][14] = isPortfolioGreen($all_data["data"][$i][8]);
-                $all_data["data"][$i][15] = yellow_artwork_count_by_portfolio_and_licensee($all_data["data"][$i][8]);
-                $all_data["data"][$i][16] = artwork_count_by_portfolio_and_licensee($all_data["data"][$i][8]);
-            }
-            
-        }
-        elseif($page == "artwork_group_list_individual"){
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i][12] = getMultiplesCountByGroupID($all_data["data"][$i][5]);
-                $all_data["data"][$i][7] = find_artworks_by_group_id($all_data["data"][$i][5]);
-                $all_data["data"][$i][8] = yellow_artwork_count_by_group_and_licensee($all_data["data"][$i][5]);
-                $all_data["data"][$i][9] = getGroupGreenStatus($all_data["data"][$i][5],$all_data["data"][$i][0]);
-                $all_data["data"][$i][10] = getGroupCodeBox($all_data["data"][$i][5],$all_data["data"][$i][0]);
-                $all_data["data"][$i][11] = artwork_count_by_group_and_licensee($all_data["data"][$i][5]);
-
-            }
-            
-        }
-        elseif($page == "portfolio_group_list_individual"){
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-               $all_data["data"][$i][7] = count_portfolio_IDs_by_group_id($all_data["data"][$i][5]);
-                $all_data["data"][$i][8] = select_portfolio_IDs_by_group_id($all_data["data"][$i][5]);
-                $all_data["data"][$i][9] = getPGCodeBox($all_data["data"][$i][5],$all_data["data"][$i][0], true);
-                $all_data["data"][$i][10] = generate_code_box($all_data["data"][$i][0],$all_data["data"][$i][9]);
-                
-            }
-            
-        }
-        elseif($page == "artwork_multiple_list"){
-             for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i]['artwork_id'] = $all_data["data"][$i][0];
-                $all_data["data"][$i]['group_id'] = $all_data["data"][$i][9];
-                $all_data["data"][$i]['code_status'] = $all_data["data"][$i][10];
-                $all_data["data"][$i]['product_type'] = $all_data["data"][$i][11];
-                $all_data["data"][$i]['portfolio_id'] = $all_data["data"][$i][12];
-                $all_data["data"][$i]['code'] = $all_data["data"][$i][13];
-                $all_data["data"][$i]['artwork_licenseeID'] = $all_data["data"][$i][7];
-
-                $all_data["data"][$i][15] = artwork_common_action_items2($all_data["data"][$i]);
-                $all_data["data"][$i][16] = getCodeBox($all_data["data"][$i]['code'], $all_data["data"][$i]['code_status'], $all_data["data"][$i]['product_type']);
-                $all_data["data"][$i][17] = chkPrivacyProtection($all_data["data"][$i][0], 2);
+                      
             }
         }
-        elseif($page == "portfolio_multiple_list"){
-            for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-                $all_data["data"][$i][8] = $all_data["data"][$i][0];
-                $all_data["data"][$i][0] = getPortfolioCodeBox($all_data["data"][$i][7], $all_data["data"][$i][0]);
-                
-                $all_data["data"][$i][9] = find_artworks_by_portfolio_id($all_data["data"][$i][7]);
-                $all_data["data"][$i][10] = count_artworks_by_portfolio_id($all_data["data"][$i][7]);
-            }
-            
-        }
-       
+
         return $all_data;
     }
 
@@ -597,3 +480,5 @@ class Ssp {
         return $out;
     }
 }
+
+include_once("custom_method.php");
