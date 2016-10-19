@@ -1,10 +1,11 @@
 <table id="example" class="table table-striped table-bordered dt-responsive " cellspacing="0" >
     <thead>
         <tr>
-            <th>Order Number</th>
-            <th>Product Name</th>
+            <!--  you can set column pririty using data-priority tag, lowest number will get highest priority-->
+            <th data-priority="1">Product Name</th> 
+            <th >Order Number</th>
             <th>Ordered quantity</th>
-            <th>price Each</th>
+            <th data-priority="2">price Each</th>
             <th>Order LineNumber</th>
         </tr>
     </thead>
@@ -19,7 +20,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" >
 <link href="jquery.dataTables.yadcf.css" rel="stylesheet" />
 
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
@@ -30,8 +30,8 @@
 
 <script>
 var columns_short = [   
-                        {"db": "orderNumber", "dt": 0, "field": "orderNumber"},
-                        {"db": "products.productName as productName", "dt": 1, "field": "productName"},
+                        {"db": "orderNumber", "dt": 1, "field": "orderNumber"},
+                        {"db": "products.productName as productName", "dt": 0, "field": "productName"},
                         {"db": "quantityOrdered", "dt": 2, "field": "quantityOrdered"},
                         {"db": "priceEach", "dt": 3, "field": "priceEach"},
                         {"db": "orderLineNumber", "dt": 4, "field": "orderLineNumber"}  
