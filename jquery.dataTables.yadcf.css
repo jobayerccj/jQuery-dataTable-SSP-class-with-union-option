@@ -1,0 +1,142 @@
+.hide {
+    display: none;
+}
+
+.inuse, .ui-slider-range .inuse, .yadcf-filter-range-number-slider .inuse {
+    background: #8BBEF0;
+}
+
+.yadcf-filter-reset-button {
+    border: 0 none;
+    border-radius: 0 !important;
+    display: inline-block;
+    margin: 0;
+    padding: 4px 8px;
+    background-color: #026999;
+    color: #fff;
+}
+
+.yadcf-filter-reset-button.range-number-slider-reset-button{
+    position: relative;
+    top: -6px;	
+}
+
+.yadcf-filter {
+    border: 0 none;
+    padding: 5px 6px;
+    width: 100px;
+}
+
+.dataTables_wrapper .yadcf-filter-wrapper .select2-container .select2-choice{
+    border: 0 none;
+    padding: 3px 6px;
+    width: 100px;
+    border-radius: 0 !important;
+}
+
+.yadcf-filter-wrapper > .select2-container > .select2-choice{
+    line-height: 22px !important;
+}
+
+.yadcf-filter > option{
+    background: white;
+}
+
+.ui-autocomplete .ui-menu-item { 
+    font-size:13px;
+}
+
+#ui-datepicker-div { 
+    font-size:13px;
+}
+.yadcf-filter-wrapper {
+    display: inline-block;
+    white-space: nowrap;
+    margin-left:0px;
+    background-color: #026999;
+}
+
+.yadcf-filter-range-number {
+    width: 40px;
+}
+
+.yadcf-filter-range-number-seperator {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.yadcf-filter-range-date {
+    width: 80px;
+}
+
+.yadcf-filter-range-date-seperator {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.yadcf-filter-wrapper-inner {
+    display: inline-block;
+    border: 1px solid #ABADB3;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.yadcf-number-slider-filter-wrapper-inner {
+    display: inline-block;
+    width: 200px;
+    margin-bottom: 7px;
+}
+
+.yadcf-filter-range-number-slider .ui-slider-handle {
+    width: 10px;
+    height: 10px;
+    margin-top: 1px;
+}
+
+.yadcf-filter-range-number-slider .ui-slider-range {
+    position: relative;
+    height: 5px;
+}
+
+.yadcf-filter-range-number-slider {
+    height: 5px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.yadcf-filter-range-number-slider {
+    overflow: visible;
+}
+
+.yadcf-number-slider-filter-wrapper-inner .yadcf-filter-range-number-slider-min-tip {
+    font-size: 13px;
+    font-weight: normal;
+    position: absolute;
+    outline-style: none;
+}
+
+.yadcf-number-slider-filter-wrapper-inner .yadcf-filter-range-number-slider-max-tip {
+    font-size: 13px;
+    font-weight: normal;
+    position:absolute;
+    outline-style: none;
+}
+
+.yadcf-number-slider-filter-wrapper-inner .yadcf-filter-range-number-slider-min-tip-inner {
+    position:absolute;
+    top: 11px;
+}
+
+.yadcf-number-slider-filter-wrapper-inner .yadcf-filter-range-number-slider-max-tip-inner {
+    position:absolute;
+    top: 11px;
+}
+
+.yadcf-exclude-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.yadcf-label.small {
+    font-size: 10px;
+}
