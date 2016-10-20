@@ -7,6 +7,7 @@
             <th>Ordered quantity</th>
             <th data-priority="2">price Each</th>
             <th>Order LineNumber</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -34,7 +35,9 @@ var columns_short = [
                         {"db": "products.productName as productName", "dt": 0, "field": "productName"},
                         {"db": "quantityOrdered", "dt": 2, "field": "quantityOrdered"},
                         {"db": "priceEach", "dt": 3, "field": "priceEach"},
-                        {"db": "orderLineNumber", "dt": 4, "field": "orderLineNumber"}  
+                        {"db": "orderLineNumber", "dt": 4, "field": "orderLineNumber"},
+                        {"db": "id as action", "dt": 5, "field": "action"}, //column used for showing action list
+                        {"db": "id as action2", "dt": 6, "field": "action2"}, //data used for action column & hidden from users
                     ];
 
 $(document).ready(function() {
@@ -64,12 +67,20 @@ $(document).ready(function() {
                     }
                 }
             },
-            
+
+            // If you need to show any custom column like action column, you can do it like below column rendering
+            {
+            "targets": 5,
+            "render": function (data, type, full, meta) {
+                    return "Action List for ID <b>" + full[6] + "<br/>";
+                }
+            },
+
             // If you need to hide any column data, use below code
-            /*{
-                "targets": 5,
+            {
+                "targets": 6,
                 "visible": false
-            }*/
+            } 
 
         ],
         "ajax": {
@@ -80,7 +91,7 @@ $(document).ready(function() {
     });
 
     //adding tfoot using js, after loading main table, otherwise yadcf will not work properly
-    $("#example").append('<tfoot><tr><th></th><th></th><th></th><th></th><th></th></tr></tfoot>');
+    $("#example").append('<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>');
 
     //individual column filtering using yadcf plugin
     yadcf.init(exampleTable, [

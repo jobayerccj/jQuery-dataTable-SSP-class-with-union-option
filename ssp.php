@@ -326,7 +326,7 @@ class Ssp {
 
         if($page == "order_details"){
         	 for($i = 0, $total = count($all_data["data"]); $i<$total; $i++ ){
-	            $all_data["data"][$i]['artwork_id'] = $all_data["data"][$i][0];
+	            $all_data["data"][$i]['custom_id'] = $all_data["data"][$i][0];
 
                 $all_data["data"][$i][5] = get_custom_data1();
                 
