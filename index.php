@@ -36,8 +36,8 @@ var columns_short = [
                         {"db": "quantityOrdered", "dt": 2, "field": "quantityOrdered"},
                         {"db": "priceEach", "dt": 3, "field": "priceEach"},
                         {"db": "orderLineNumber", "dt": 4, "field": "orderLineNumber"},
-                        {"db": "id as action", "dt": 5, "field": "action"}, //column used for showing action list
-                        {"db": "id as action2", "dt": 6, "field": "action2"}, //data used for action column & hidden from users
+                        {"db": "orderNumber as action", "dt": 5, "field": "action"}, //column used for showing action list
+                        {"db": "orderNumber as action2", "dt": 6, "field": "action2"}, //data used for action column & hidden from users
                     ];
 
 $(document).ready(function() {
@@ -86,7 +86,7 @@ $(document).ready(function() {
         "ajax": {
             "type": "POST",
             "url": "dataTable.php",
-            "data": {"table": "orderdetails", "primary_key": "id", "page": "order_details", "columns": columns_short}
+            "data": {"table": "orderdetails", "primary_key": "orderNumber", "page": "order_details", "columns": columns_short}
         }
     });
 
